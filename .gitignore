@@ -1,0 +1,8 @@
+.env
+.venv/
+.python_packages/
+.wheels/
+.tmp/
+__pycache__/
+*.pyc
+db.sqlite3

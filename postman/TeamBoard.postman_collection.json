@@ -1,0 +1,231 @@
+{
+  "info": {
+    "name": "TeamBoard API",
+    "_postman_id": "0e29da7c-7c2d-4c52-a9ef-5f5106d6e91e",
+    "description": "Postman collection for the TeamBoard backend assignment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "admin_access_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Register Company Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"acmecorp\",\n  \"password\": \"securepass123\",\n  \"company_name\": \"Acme Corp\",\n  \"email\": \"dev@acmecorp.com\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/register/",
+        "Screenshot": "postman/Register.png"
+      }
+    },
+    {
+      "name": "02 Register Duplicate Username",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"acmecorp\",\n  \"password\": \"securepass123\",\n  \"company_name\": \"Acme Corp\",\n  \"email\": \"dev@acmecorp.com\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/register/",
+        "Screenshot": "postman/Duplicate.png"
+      }
+    },
+    {
+      "name": "03 Login Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"acmecorp\",\n  \"password\": \"securepass123\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/login/",
+        "Screenshot": "postman/Login.png"
+      }
+    },
+    {
+      "name": "04 Login Invalid Credentials",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"acmecorp\",\n  \"password\": \"wrongpass\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/login/",
+        "Screenshot": "postman/Invalid_login.png"
+      }
+    },
+    {
+      "name": "05 KB Query Unauthorized",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"search\": \"select_related\"\n}"
+        },
+        "url": "{{base_url}}/api/kb/query/",
+        "Screenshot": "postman/Unauthorized.png"
+      }
+    },
+    {
+      "name": "06 KB Query Missing Search Field",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": "{{base_url}}/api/kb/query/",
+        "Screenshot": "postman/Missing_search.png"
+
+      }
+    },
+    {
+      "name": "07 KB Query Blank Search",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"search\": \"   \"\n}"
+        },
+        "url": "{{base_url}}/api/kb/query/",
+        "Screenshot": "postman/Blank_search.png"
+      }
+    },
+    {
+      "name": "08 KB Query Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"search\": \"select_related\"\n}"
+        },
+        "url": "{{base_url}}/api/kb/query/",
+        "Screenshot": "postman/Query_success.png"
+      }
+    },
+    {
+      "name": "09 KB Query No Results",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"search\": \"this-will-not-match\"\n}"
+        },
+        "url": "{{base_url}}/api/kb/query/",
+        "Screenshot": "postman/No_results.png"
+      }
+    },
+    {
+      "name": "10 Usage Summary Forbidden For Client",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/admin/usage-summary/",
+        "Screenshot": "postman/Forbidden.png" 
+      }
+    },
+    {
+      "name": "11 Usage Summary Success For Admin",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{admin_access_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/admin/usage-summary/",
+        "Screenshot": "postman/Usage_summary.png"
+      }
+    }
+  ]
+}
